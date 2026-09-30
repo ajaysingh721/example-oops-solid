@@ -1,0 +1,11 @@
+/home/norman/Projects/example-oops-solid/example.oops/bin/Debug/net10.0/example.oops.deps.json
+/home/norman/Projects/example-oops-solid/example.oops/bin/Debug/net10.0/example.oops.dll
+/home/norman/Projects/example-oops-solid/example.oops/bin/Debug/net10.0/example.oops.pdb
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/example.oops.GeneratedMSBuildEditorConfig.editorconfig
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/example.oops.AssemblyInfoInputs.cache
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/example.oops.AssemblyInfo.cs
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/example.oops.csproj.CoreCompileInputs.cache
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/example.oops.dll
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/refint/example.oops.dll
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/example.oops.pdb
+/home/norman/Projects/example-oops-solid/example.oops/obj/Debug/net10.0/ref/example.oops.dll
