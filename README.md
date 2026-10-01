@@ -72,6 +72,7 @@ flowchart LR
 	IOrderTotalCalculator -.implemented by.-> OrderTotalCalculator
 	IDiscountPolicy -.implemented by.-> NoDiscountPolicy
 	IDiscountPolicy -.implemented by.-> PercentageDiscountPolicy
+	IDiscountPolicy -.implemented by.-> FixedAmountDiscountPolicy
 	IPaymentProcessor -.implemented by.-> ConsolePaymentProcessor
 ```
 

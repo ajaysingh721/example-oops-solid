@@ -24,26 +24,47 @@ Console.WriteLine();
 Console.WriteLine("SOLID PRINCIPLES");
 Console.WriteLine("----------------");
 
+Console.WriteLine("S - Single Responsibility Principle");
 var order = new Order(
 	new OrderItem("Notebook", 4.50m, 2),
 	new OrderItem("Pen", 1.50m, 3));
 var calculator = new OrderTotalCalculator();
 var subtotal = calculator.CalculateSubtotal(order);
-
-// Replace the policy without changing CheckoutService or the order.
-IDiscountPolicy discountPolicy = new NoDiscountPolicy();
-var noDiscountTotal = discountPolicy.Apply(subtotal);
-discountPolicy = new PercentageDiscountPolicy(0.10m);
-var total = discountPolicy.Apply(subtotal);
-
-Console.WriteLine($"The same subtotal with no discount: {noDiscountTotal:C}");
-Console.WriteLine($"The same subtotal with 10% off: {total:C}");
-var fixedDiscountTotal = new FixedAmountDiscountPolicy(2m).Apply(subtotal);
-Console.WriteLine($"The same subtotal with $2 off: {fixedDiscountTotal:C}");
-Console.WriteLine(new ReceiptFormatter().Format(order, subtotal, total));
-new CheckoutService(calculator, discountPolicy, new ConsolePaymentProcessor()).Checkout(order);
+Console.WriteLine($"OrderTotalCalculator calculates the subtotal: {subtotal:C}");
 
 Console.WriteLine();
+Console.WriteLine("O - Open-Closed Principle");
+var fixedAmountPolicy = new FixedAmountDiscountPolicy(2m);
+Console.WriteLine(
+	$"Added {nameof(FixedAmountDiscountPolicy)} without changing {nameof(CheckoutService)}: " +
+	$"{fixedAmountPolicy.Apply(subtotal):C}");
+
+Console.WriteLine();
+Console.WriteLine("L - Liskov Substitution Principle");
+IDiscountPolicy discountPolicy = new NoDiscountPolicy();
+foreach (var policy in new IDiscountPolicy[]
+{
+	discountPolicy,
+	new PercentageDiscountPolicy(0.10m),
+	fixedAmountPolicy
+})
+{
+	discountPolicy = policy;
+	Console.WriteLine($"{policy.GetType().Name} works as IDiscountPolicy: {discountPolicy.Apply(subtotal):C}");
+}
+
+discountPolicy = new PercentageDiscountPolicy(0.10m);
+var total = discountPolicy.Apply(subtotal);
+Console.WriteLine(new ReceiptFormatter().Format(order, subtotal, total));
+
+Console.WriteLine();
+Console.WriteLine("I - Interface Segregation Principle");
 Console.WriteLine("A basic printer only needs the print operation:");
 IPrinter printer = new BasicPrinter();
 printer.Print("Beginner's guide");
+Console.WriteLine($"An office machine also scans: {new OfficeMachine().Scan()}");
+
+Console.WriteLine();
+Console.WriteLine("D - Dependency Inversion Principle");
+Console.WriteLine("CheckoutService receives abstractions through its constructor:");
+new CheckoutService(calculator, discountPolicy, new ConsolePaymentProcessor()).Checkout(order);
