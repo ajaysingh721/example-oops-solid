@@ -90,13 +90,13 @@ For example, changing receipt wording belongs in `ReceiptFormatter`, not in the 
 
 Software entities should be open for extension but closed for modification: new behavior should often be added by introducing a new implementation rather than editing stable coordinating code.
 
-`CheckoutService` receives an `IDiscountPolicy`. `NoDiscountPolicy` and `PercentageDiscountPolicy` are two options. A future `CouponDiscountPolicy` could implement the same interface without adding another discount branch inside `CheckoutService`.
+`CheckoutService` receives an `IDiscountPolicy`. `NoDiscountPolicy`, `PercentageDiscountPolicy`, and `FixedAmountDiscountPolicy` are three options. A future `CouponDiscountPolicy` could implement the same interface without adding another discount branch inside `CheckoutService`.
 
 ### L: Liskov Substitution Principle
 
 An implementation should be usable anywhere its interface or base type is expected, without surprising the caller or breaking the promised behavior.
 
-The app assigns `NoDiscountPolicy` and then `PercentageDiscountPolicy` to the same `IDiscountPolicy` variable and applies each to the same subtotal. Both follow the policy contract: for a non-negative subtotal, they return a total from zero through the original subtotal. A policy that returned a negative total or more than the subtotal would break that contract.
+The app assigns `NoDiscountPolicy` and then `PercentageDiscountPolicy` to the same `IDiscountPolicy` variable and applies each to the same subtotal. `FixedAmountDiscountPolicy` is another implementation: it subtracts a set amount but never reduces the total below zero. All three follow the policy contract: for a non-negative subtotal, they return a total from zero through the original subtotal. A policy that returned a negative total or more than the subtotal would break that contract.
 
 ### I: Interface Segregation Principle
 

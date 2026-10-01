@@ -38,6 +38,8 @@ var total = discountPolicy.Apply(subtotal);
 
 Console.WriteLine($"The same subtotal with no discount: {noDiscountTotal:C}");
 Console.WriteLine($"The same subtotal with 10% off: {total:C}");
+var fixedDiscountTotal = new FixedAmountDiscountPolicy(2m).Apply(subtotal);
+Console.WriteLine($"The same subtotal with $2 off: {fixedDiscountTotal:C}");
 Console.WriteLine(new ReceiptFormatter().Format(order, subtotal, total));
 new CheckoutService(calculator, discountPolicy, new ConsolePaymentProcessor()).Checkout(order);
 

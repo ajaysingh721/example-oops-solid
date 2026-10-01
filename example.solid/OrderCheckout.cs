@@ -112,6 +112,27 @@ public sealed class PercentageDiscountPolicy(decimal discountRate) : IDiscountPo
     }
 }
 
+/// <summary>A discount policy that subtracts a fixed amount without reducing the total below zero.</summary>
+/// <param name="discountAmount">The non-negative amount to subtract.</param>
+public sealed class FixedAmountDiscountPolicy(decimal discountAmount) : IDiscountPolicy
+{
+    /// <summary>Gets the configured amount to subtract.</summary>
+    public decimal DiscountAmount { get; } = ValidateAmount(discountAmount);
+
+    /// <summary>Returns the subtotal after subtracting the configured amount.</summary>
+    public decimal Apply(decimal subtotal) => Math.Max(0m, subtotal - DiscountAmount);
+
+    private static decimal ValidateAmount(decimal amount)
+    {
+        if (amount < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "The discount amount cannot be negative.");
+        }
+
+        return amount;
+    }
+}
+
 /// <summary>Defines how a checkout sends its final amount for payment.</summary>
 public interface IPaymentProcessor
 {
